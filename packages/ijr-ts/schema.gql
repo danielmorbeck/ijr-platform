@@ -69,6 +69,8 @@ type Mutation {
   deleteArticle(id: ID!): Boolean!
   deleteAuthor(id: ID!): Boolean!
   deleteCategory(id: ID!): Boolean!
+  joinArticleSession(articleId: ID!): String!
+  leaveArticleSession(articleId: ID!, sessionId: String!): Boolean!
   publishArticle(id: ID!): Article!
   updateArticle(id: ID!, input: UpdateArticleInput!): Article!
   updateAuthor(id: ID!, input: UpdateAuthorInput!): Author!
@@ -82,6 +84,10 @@ type Query {
   authors: [Author!]!
   categories: [Category!]!
   category(slug: String!): Category!
+}
+
+type Subscription {
+  articleReaderCount(articleId: ID!): Int!
 }
 
 input UpdateArticleInput {
