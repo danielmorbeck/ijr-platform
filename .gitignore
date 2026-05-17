@@ -38,6 +38,8 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 
+.pnpm-store/
+
 # Bit.dev
 .bit/
 # Keep .bitmap tracked when Bit is initialized in the RN package

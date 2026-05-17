@@ -1,0 +1,101 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Article {
+  author: Author!
+  categories: [Category!]!
+  content: String!
+  createdAt: DateTime!
+  id: ID!
+  publishedAt: DateTime
+  slug: String!
+  status: ArticleStatus!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input ArticleFilterInput {
+  status: ArticleStatus
+}
+
+"""Publication status of an article"""
+enum ArticleStatus {
+  ARCHIVED
+  DRAFT
+  PUBLISHED
+}
+
+type Author {
+  articles: [Article!]
+  email: String!
+  id: ID!
+  name: String!
+}
+
+type Category {
+  articleCount: Int!
+  articles: [Article!]
+  id: ID!
+  name: String!
+  slug: String!
+}
+
+input CreateArticleInput {
+  authorId: ID!
+  categoryIds: [ID!]!
+  content: String!
+  title: String!
+}
+
+input CreateAuthorInput {
+  email: String!
+  name: String!
+}
+
+input CreateCategoryInput {
+  name: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createArticle(input: CreateArticleInput!): Article!
+  createAuthor(input: CreateAuthorInput!): Author!
+  createCategory(input: CreateCategoryInput!): Category!
+  deleteArticle(id: ID!): Boolean!
+  deleteAuthor(id: ID!): Boolean!
+  deleteCategory(id: ID!): Boolean!
+  publishArticle(id: ID!): Article!
+  updateArticle(id: ID!, input: UpdateArticleInput!): Article!
+  updateAuthor(id: ID!, input: UpdateAuthorInput!): Author!
+  updateCategory(id: ID!, input: UpdateCategoryInput!): Category!
+}
+
+type Query {
+  article(slug: String!): Article
+  articles(filter: ArticleFilterInput): [Article!]!
+  author(id: ID!): Author!
+  authors: [Author!]!
+  categories: [Category!]!
+  category(slug: String!): Category!
+}
+
+input UpdateArticleInput {
+  categoryIds: [ID!]
+  content: String
+  status: ArticleStatus
+  title: String
+}
+
+input UpdateAuthorInput {
+  email: String
+  name: String
+}
+
+input UpdateCategoryInput {
+  name: String
+}
