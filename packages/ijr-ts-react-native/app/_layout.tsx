@@ -16,11 +16,6 @@ export {
   ErrorBoundary,
 } from 'expo-router';
 
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -54,8 +49,9 @@ function RootLayoutNav() {
     <ApolloProvider client={apolloClient}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="index" options={{ title: 'Articles' }} />
+          <Stack.Screen name="categories" options={{ title: 'Categories' }} />
+          <Stack.Screen name="article/[slug]" options={{ title: 'Article' }} />
         </Stack>
       </ThemeProvider>
     </ApolloProvider>
