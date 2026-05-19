@@ -52,6 +52,21 @@ describe('ArticleReaderSessionsService', () => {
     });
   });
 
+  describe('emitCurrentCount', () => {
+    it('publishes the current count without changing sessions', async () => {
+      await service.join(articleId);
+      pubSub.publish.mockClear();
+
+      await service.emitCurrentCount(articleId);
+
+      expect(service.getCount(articleId)).toBe(1);
+      expect(pubSub.publish).toHaveBeenCalledWith(
+        `articleReaderCount.${articleId}`,
+        { articleReaderCount: 1, articleId },
+      );
+    });
+  });
+
   describe('leave', () => {
     it('decrements counter after valid session leaves', async () => {
       const session1 = await service.join(articleId);

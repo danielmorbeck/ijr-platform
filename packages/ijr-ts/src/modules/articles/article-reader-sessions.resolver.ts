@@ -11,11 +11,10 @@ import {
 import { PubSub } from 'graphql-subscriptions';
 import { PUB_SUB } from '../../shared/pubsub.module';
 import { ArticleReaderSessionsService } from './article-reader-sessions.service';
-
-interface ArticleReaderCountPayload {
-  articleReaderCount: number;
-  articleId: string;
-}
+import {
+  type ArticleReaderCountPayload,
+  withInitialReaderCount,
+} from './with-initial-reader-count';
 
 interface GqlContext {
   connectionId?: string;
@@ -34,8 +33,7 @@ export class ArticleReaderSessionsResolver {
     @Args('articleId', { type: () => ID }) articleId: string,
     @Context() context: GqlContext,
   ): Promise<string> {
-    const connectionId =
-      context.connectionId ?? context.extra?.connectionId;
+    const connectionId = context.connectionId ?? context.extra?.connectionId;
     return this.readerSessions.join(articleId, connectionId);
   }
 
@@ -48,16 +46,20 @@ export class ArticleReaderSessionsResolver {
   }
 
   @Subscription(() => Int, {
-    resolve: (payload: ArticleReaderCountPayload) =>
-      payload.articleReaderCount,
+    resolve: (payload: ArticleReaderCountPayload) => payload.articleReaderCount,
     filter: (
       payload: ArticleReaderCountPayload,
       variables: { articleId: string },
     ) => payload.articleId === variables.articleId,
   })
   articleReaderCount(@Args('articleId', { type: () => ID }) articleId: string) {
-    return this.pubSub.asyncIterableIterator(
+    const updates = this.pubSub.asyncIterableIterator(
       `articleReaderCount.${articleId}`,
+    ) as AsyncIterableIterator<ArticleReaderCountPayload>;
+    return withInitialReaderCount(
+      articleId,
+      (id) => this.readerSessions.getCount(id),
+      updates,
     );
   }
 }

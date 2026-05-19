@@ -86,6 +86,10 @@ export class ArticleReaderSessionsService {
     return this.sessionsByArticle.get(articleId)?.size ?? 0;
   }
 
+  async emitCurrentCount(articleId: string): Promise<void> {
+    await this.publishCount(articleId);
+  }
+
   private removeSession(
     sessionId: string,
     articleId: string,
