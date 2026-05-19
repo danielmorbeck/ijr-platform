@@ -1,9 +1,11 @@
 import { useQuery } from '@apollo/client/react';
+import { ArticleCard } from '@danielmorbeck/ijr-ui.article-card';
+import { EmptyState } from '@danielmorbeck/ijr-ui.empty-state';
 import { Stack, router } from 'expo-router';
 import { FlatList, Pressable, RefreshControl, StyleSheet } from 'react-native';
 
 import QueryState from '@/components/QueryState';
-import { Text, View } from '@/components/Themed';
+import { Text } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { PUBLISHED_ARTICLES } from '@/src/graphql/articles';
@@ -58,25 +60,20 @@ export default function ArticlesScreen() {
           }
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => refetch()} />}
           ListEmptyComponent={
-            <View style={styles.empty}>
-              <Text style={styles.emptyText}>Nenhum artigo publicado</Text>
-            </View>
+            <EmptyState title="Nenhum artigo publicado" />
           }
           renderItem={({ item }) => (
-            <Pressable
+            <ArticleCard
+              title={item.title}
+              authorName={item.author.name}
+              publishedAt={formatDate(item.publishedAt)}
               onPress={() =>
                 router.push({
                   pathname: '/article/[slug]',
                   params: { slug: item.slug },
                 })
               }
-              style={({ pressed }) => [styles.card, pressed && styles.cardPressed]}
-            >
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text style={styles.cardMeta}>
-                {item.author.name} · {formatDate(item.publishedAt)}
-              </Text>
-            </Pressable>
+            />
           )}
         />
       </QueryState>
@@ -91,35 +88,6 @@ const styles = StyleSheet.create({
   },
   emptyList: {
     flexGrow: 1,
-  },
-  empty: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 32,
-  },
-  emptyText: {
-    fontSize: 16,
-    opacity: 0.7,
-  },
-  card: {
-    padding: 16,
-    borderRadius: 12,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(128,128,128,0.35)',
-    marginBottom: 12,
-  },
-  cardPressed: {
-    opacity: 0.85,
-  },
-  cardTitle: {
-    fontSize: 17,
-    fontWeight: '600',
-    marginBottom: 6,
-  },
-  cardMeta: {
-    fontSize: 14,
-    opacity: 0.65,
   },
   headerLink: {
     marginRight: 16,

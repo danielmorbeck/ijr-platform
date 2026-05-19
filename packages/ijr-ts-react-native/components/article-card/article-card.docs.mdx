@@ -1,0 +1,42 @@
+---
+description: 'Card de artigo para listas de conteúdo publicado.'
+labels: ['react-native', 'article', 'card']
+---
+
+import { ArticleCard } from './article-card';
+
+## ArticleCard
+
+Card pressionável para exibir título, autor, data de publicação e categoria opcional em listas de artigos.
+
+### Props
+
+| Prop | Tipo | Obrigatório | Descrição |
+|------|------|-------------|-----------|
+| `title` | `string` | sim | Título do artigo |
+| `authorName` | `string` | sim | Nome do autor |
+| `publishedAt` | `string` | sim | Data já formatada (ex.: `19 mai. 2026`) |
+| `category` | `{ name: string; color: string }` | não | Badge de categoria com cor de fundo |
+| `onPress` | `() => void` | não | Callback ao tocar; torna o card pressionável |
+
+### Uso
+
+```js
+<ArticleCard
+  title="Como estruturar um monorepo"
+  authorName="Maria Silva"
+  publishedAt="19 mai. 2026"
+  onPress={() => navigation.navigate('article', { slug })}
+/>
+```
+
+### Com categoria
+
+```js live
+<ArticleCard
+  title="GraphQL no React Native"
+  authorName="João Santos"
+  publishedAt="15 mai. 2026"
+  category={{ name: 'Tecnologia', color: '#2f95dc' }}
+/>
+```

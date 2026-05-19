@@ -1,0 +1,29 @@
+---
+description: 'Banner com contagem de leitores em tempo real.'
+labels: ['react-native', 'reader', 'live']
+---
+
+import { ReaderCounter } from './reader-counter';
+
+## ReaderCounter
+
+Banner que mostra quantas pessoas estão lendo o artigo agora. Suporta estado de carregamento enquanto a sessão é registrada.
+
+### Props
+
+| Prop | Tipo | Obrigatório | Descrição |
+|------|------|-------------|-----------|
+| `count` | `number \| null` | sim | Número de leitores; `null` enquanto indisponível |
+| `loading` | `boolean` | não | Exibe reticências em vez do número |
+
+### Uso
+
+```js
+<ReaderCounter count={readerCount} loading={joining} />
+```
+
+### Estados
+
+```js live
+<ReaderCounter count={3} />
+```

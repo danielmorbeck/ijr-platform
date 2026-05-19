@@ -1,0 +1,37 @@
+/**
+ * this is the main configuration file of your bit workspace.
+ * for full documentation, please see: https://bit.dev/reference/workspace/workspace-json
+ **/{
+  "$schema": "https://static.bit.dev/teambit/schemas/schema.json",
+  "teambit.workspace/workspace": {
+    "name": "ijr-ui",
+    "icon": "https://static.bit.dev/brands/bit-logo-min.png",
+    "defaultDirectory": "components/{name}",
+    "defaultScope": "danielmorbeck.ijr-ui",
+    "resolveAspectsFromNodeModules": true,
+    "resolveEnvsFromRoots": true
+  },
+  "teambit.generator/generator": {
+    "envs": [
+      "bitdev.react-native/react-native-env"
+    ]
+  },
+  "teambit.dependencies/dependency-resolver": {
+    "packageManager": "teambit.dependencies/pnpm",
+    "allowScripts": {},
+    "rootComponents": true,
+    "policy": {
+      "dependencies": {
+        "@danielmorbeck/ijr-ui.article-card": "^0.0.1",
+        "@danielmorbeck/ijr-ui.category-badge": "^0.0.1",
+        "@danielmorbeck/ijr-ui.empty-state": "^0.0.1",
+        "@danielmorbeck/ijr-ui.reader-counter": "^0.0.2"
+      },
+      "peerDependencies": {}
+    },
+    "linkCoreAspects": true
+  },
+  "teambit.workspace/workspace-config-files": {
+    "enableWorkspaceConfigWrite": true
+  }
+}

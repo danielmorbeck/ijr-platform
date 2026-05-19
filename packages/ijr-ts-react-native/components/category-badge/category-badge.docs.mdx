@@ -1,0 +1,29 @@
+---
+description: 'Chip de categoria com cor de fundo configurável.'
+labels: ['react-native', 'category', 'badge']
+---
+
+import { CategoryBadge } from './category-badge';
+
+## CategoryBadge
+
+Badge compacto para exibir o nome de uma categoria. A cor vem da aplicação (a API não expõe cor de categoria).
+
+### Props
+
+| Prop | Tipo | Obrigatório | Descrição |
+|------|------|-------------|-----------|
+| `name` | `string` | sim | Nome exibido no chip |
+| `color` | `string` | sim | Cor de fundo (hex ou rgba) |
+
+### Uso
+
+```js
+<CategoryBadge name="Tecnologia" color={categoryColor(slug)} />
+```
+
+### Exemplo
+
+```js live
+<CategoryBadge name="Tecnologia" color="#2f95dc" />
+```

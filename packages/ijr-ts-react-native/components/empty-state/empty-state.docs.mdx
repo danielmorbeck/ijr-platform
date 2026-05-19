@@ -1,0 +1,36 @@
+---
+description: 'Estado vazio ou mensagem de conteúdo não encontrado.'
+labels: ['react-native', 'empty', 'placeholder']
+---
+
+import { EmptyState } from './empty-state';
+
+## EmptyState
+
+Layout centralizado para listas vazias, artigos não encontrados ou ausência de dados.
+
+### Props
+
+| Prop         | Tipo         | Obrigatório | Descrição                                  |
+| ------------ | ------------ | ----------- | ------------------------------------------ |
+| `title`      | `string`     | sim         | Título principal                           |
+| `message`    | `string`     | não         | Texto secundário                           |
+| `icon`       | `string`     | não         | Emoji ou caractere exibido acima do título |
+| `ctaLabel`   | `string`     | não         | Rótulo do botão de ação                    |
+| `onCtaPress` | `() => void` | não         | Callback do botão (requer `ctaLabel`)      |
+
+### Uso
+
+```js
+<EmptyState title="Nenhum artigo publicado" />
+```
+
+### Com mensagem e CTA
+
+```js live
+<EmptyState
+  title="Artigo não encontrado"
+  message="O link pode estar incorreto."
+  icon="📭"
+/>
+```

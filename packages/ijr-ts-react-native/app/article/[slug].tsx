@@ -1,11 +1,15 @@
 import { useQuery } from '@apollo/client/react';
+import { CategoryBadge } from '@danielmorbeck/ijr-ui.category-badge';
+import { EmptyState } from '@danielmorbeck/ijr-ui.empty-state';
+import { ReaderCounter } from '@danielmorbeck/ijr-ui.reader-counter';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 
 import QueryState from '@/components/QueryState';
-import { Text, View } from '@/components/Themed';
+import { Text } from '@/components/Themed';
 import { ARTICLE_BY_SLUG } from '@/src/graphql/articles';
 import { useArticleReaderSession } from '@/src/hooks/useArticleReaderSession';
+import { categoryColor } from '@/src/utils/categoryColor';
 
 type ArticleDetail = {
   id: string;
@@ -27,7 +31,7 @@ function formatDate(iso: string) {
 
 export default function ArticleScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
-  const slugParam = typeof slug === 'string' ? slug : slug?.[0] ?? '';
+  const slugParam = typeof slug === 'string' ? slug : (slug?.[0] ?? '');
 
   const { data, loading, error, refetch } = useQuery<{
     article: ArticleDetail | null;
@@ -48,19 +52,10 @@ export default function ArticleScreen() {
       />
       <QueryState loading={loading} error={error} onRetry={() => refetch()}>
         {!article ? (
-          <View style={styles.centered}>
-            <Text style={styles.notFound}>Artigo não encontrado</Text>
-          </View>
+          <EmptyState title="Artigo não encontrado" />
         ) : (
           <ScrollView contentContainerStyle={styles.scroll}>
-            <View style={styles.readerBanner}>
-              <Text style={styles.readerCount}>
-                👁️{' '}
-                {readerCount == null || joining
-                  ? '…'
-                  : `${readerCount} pessoas lendo agora`}
-              </Text>
-            </View>
+            <ReaderCounter count={readerCount ?? null} loading={joining} />
 
             <Text style={styles.title}>{article.title}</Text>
             <Text style={styles.meta}>
@@ -70,9 +65,11 @@ export default function ArticleScreen() {
             {article.categories.length > 0 ? (
               <View style={styles.chips}>
                 {article.categories.map((category) => (
-                  <View key={category.slug} style={styles.chip}>
-                    <Text style={styles.chipText}>{category.name}</Text>
-                  </View>
+                  <CategoryBadge
+                    key={category.slug}
+                    name={category.name}
+                    color={categoryColor(category.slug)}
+                  />
                 ))}
               </View>
             ) : null}
@@ -90,27 +87,6 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 40,
   },
-  centered: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 24,
-  },
-  notFound: {
-    fontSize: 16,
-    opacity: 0.7,
-  },
-  readerBanner: {
-    marginBottom: 16,
-    padding: 12,
-    borderRadius: 8,
-    backgroundColor: 'rgba(47,149,220,0.12)',
-  },
-  readerCount: {
-    fontSize: 15,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
   title: {
     fontSize: 24,
     fontWeight: '700',
@@ -127,17 +103,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     gap: 8,
     marginBottom: 16,
-  },
-  chip: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 16,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(128,128,128,0.4)',
-  },
-  chipText: {
-    fontSize: 13,
-    opacity: 0.85,
   },
   content: {
     fontSize: 16,
