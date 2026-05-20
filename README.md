@@ -239,7 +239,7 @@ Componentes incluídos neste escopo:
 
 Demonstração end-to-end do contador em tempo real (dois dispositivos no mesmo artigo).
 
-**URL a adicionar** — substituir pelo link definitivo após o upload do vídeo.
+https://drive.google.com/file/d/1GlpUn0qNPLx71-GrOluRoA-21WoSwD8w/view?usp=drive_link
 
 ## Scripts úteis (raiz)
 
