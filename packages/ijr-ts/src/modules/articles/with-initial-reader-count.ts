@@ -11,9 +11,9 @@ export function withInitialReaderCount(
   const inner = source[Symbol.asyncIterator]();
   let sentInitial = false;
 
-  return {
+  const iterator: AsyncIterableIterator<ArticleReaderCountPayload> = {
     [Symbol.asyncIterator]() {
-      return this;
+      return iterator;
     },
     async next(): Promise<IteratorResult<ArticleReaderCountPayload>> {
       if (!sentInitial) {
@@ -45,4 +45,6 @@ export function withInitialReaderCount(
       throw error;
     },
   };
+
+  return iterator;
 }

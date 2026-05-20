@@ -72,8 +72,8 @@ describe('ArticlesService', () => {
 
   describe('create', () => {
     it('creates article with author, categories, DRAFT status and generated slug', async () => {
-      authorsRepository.findOne!.mockResolvedValue(mockAuthor);
-      categoriesRepository.find!.mockResolvedValue(mockCategories);
+      jest.mocked(authorsRepository.findOne).mockResolvedValue(mockAuthor);
+      jest.mocked(categoriesRepository.find).mockResolvedValue(mockCategories);
 
       const savedArticle = {
         id: 'article-1',
@@ -87,8 +87,8 @@ describe('ArticlesService', () => {
         publishedAt: null,
       } as Article;
 
-      articlesRepository.create!.mockReturnValue(savedArticle);
-      articlesRepository.save!.mockResolvedValue(savedArticle);
+      jest.mocked(articlesRepository.create).mockReturnValue(savedArticle);
+      jest.mocked(articlesRepository.save).mockResolvedValue(savedArticle);
 
       const result = await service.create({
         title: 'Introdução ao GraphQL',
@@ -129,9 +129,12 @@ describe('ArticlesService', () => {
 
       const result = await service.findAll({ status: ArticleStatus.PUBLISHED });
 
-      expect(qb.andWhere).toHaveBeenCalledWith('article.status = :status', {
-        status: ArticleStatus.PUBLISHED,
-      });
+      expect(jest.mocked(qb.andWhere)).toHaveBeenCalledWith(
+        'article.status = :status',
+        {
+          status: ArticleStatus.PUBLISHED,
+        },
+      );
       expect(result).toEqual(publishedArticles);
       expect(result.every((a) => a.status === ArticleStatus.PUBLISHED)).toBe(
         true,

@@ -36,9 +36,8 @@ import { PubSubModule } from './shared/pubsub.module';
               return { connectionId };
             },
             onDisconnect: (context) => {
-              const connectionId = (
-                context.extra as { connectionId?: string }
-              ).connectionId;
+              const connectionId = (context.extra as { connectionId?: string })
+                .connectionId;
               if (connectionId) {
                 readerSessions.removeByConnectionId(connectionId);
               }

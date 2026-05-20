@@ -10,18 +10,16 @@ async function collect<T>(iterable: AsyncIterableIterator<T>): Promise<T[]> {
 
 describe('withInitialReaderCount', () => {
   it('yields current count first, then source events', async () => {
-    async function* source() {
-      yield { articleReaderCount: 2, articleId: 'a1' };
+    function source(): AsyncIterableIterator<{
+      articleReaderCount: number;
+      articleId: string;
+    }> {
+      return (async function* () {
+        yield { articleReaderCount: 2, articleId: 'a1' };
+      })();
     }
 
-    const iterator = withInitialReaderCount(
-      'a1',
-      () => 1,
-      source() as AsyncIterableIterator<{
-        articleReaderCount: number;
-        articleId: string;
-      }>,
-    );
+    const iterator = withInitialReaderCount('a1', () => 1, source());
 
     const values = await collect(iterator);
 

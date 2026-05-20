@@ -25,5 +25,11 @@
   "packageManager": "pnpm@9.15.9",
   "engines": {
     "node": ">=20"
+  },
+  "pnpm": {
+    "overrides": {
+      "jest-environment-node": "30.4.1",
+      "jest-mock": "30.4.1"
+    }
   }
 }

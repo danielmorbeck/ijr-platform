@@ -1,4 +1,6 @@
-import './_dev';
+if (__DEV__) {
+  require('../ReactotronConfig');
+}
 
 import { ApolloProvider } from '@apollo/client/react';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';

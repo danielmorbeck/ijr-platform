@@ -32,7 +32,8 @@ describe('GraphQL (e2e)', () => {
       .send({ query: '{ articles { id } }' })
       .expect(200)
       .expect((res) => {
-        expect(res.body.data.articles).toEqual([]);
+        const body = res.body as { data: { articles: unknown[] } };
+        expect(body.data.articles).toEqual([]);
       });
   });
 });

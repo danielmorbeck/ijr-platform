@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 export type ReaderCounterProps = {
@@ -34,11 +35,9 @@ const READER_EMOJI = '👁️';
 export function ReaderCounter({ count, loading = false }: ReaderCounterProps) {
   return (
     <View style={styles.banner} accessibilityRole="text">
-      <View style={styles.banner} accessibilityRole="text">
-        <Text style={styles.text}>
-          {READER_EMOJI} {formatLabel(count, loading)}
-        </Text>
-      </View>
+      <Text style={styles.text}>
+        {READER_EMOJI} {formatLabel(count, loading)}
+      </Text>
     </View>
   );
 }
