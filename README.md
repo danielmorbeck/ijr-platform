@@ -237,6 +237,10 @@ Componentes incluídos neste escopo:
 
 ## Demo em vídeo
 
+Demonstração end-to-end do contador em tempo real (dois dispositivos no mesmo artigo).
+
+**URL a adicionar** — substituir pelo link definitivo após o upload do vídeo.
+
 ## Scripts úteis (raiz)
 
 | Comando      | Descrição                  |

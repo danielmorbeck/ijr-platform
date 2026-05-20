@@ -1,5 +1,7 @@
 # ijr-ts
 
+Documentação do monorepo: [README na raiz](../../README.md).
+
 NestJS GraphQL API for the IJR platform (SQLite + TypeORM).
 
 ## Setup
