@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "postinstall": "bit compile && bit link && bit ws-config write"
+    "postinstall": "bit compile && bit link"
   },
   "dependencies": {
     "@apollo/client": "^4.1.9",

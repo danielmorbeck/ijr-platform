@@ -32,6 +32,6 @@
     "linkCoreAspects": true
   },
   "teambit.workspace/workspace-config-files": {
-    "enableWorkspaceConfigWrite": true
+    "enableWorkspaceConfigWrite": false
   }
 }
